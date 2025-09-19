@@ -1,41 +1,45 @@
-<!-- index.html -->
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-  <meta charset="utf-8">
-  <link rel="manifest" href="manifest.json">
+  <meta charset="utf-8" />
+  <link rel="manifest" href="manifest.json" />
   <title>PWA 18 SEP 2025</title>
 </head>
 <body>
   <h1>Hola</h1>
   <img src="hola.png" alt="Imagen de hola" />
-  
-  <div id="contenido">
-    <!-- Contenido dinámico -->
-  </div>
+  <div id="contenido"></div>
   
   <div>
-    <a href="javascript:void(0)" onclick="exhibirLineas()">Exhibir línea</a><br />
+    <button id="btnExhibirLinea">Exhibir línea</button><br />
     <canvas id="lienzo" width="400" height="300" style="border: 1px solid #000000;">
       Tu navegador no soporta canvas.
     </canvas>
   </div>
 
-  <!-- Carga de scripts -->
-  <script async src="lib1.js"></script>
-  <script async src="lib2.js"></script>
+  <!-- Cargo los scripts con defer para respetar el orden y que el DOM esté listo -->
+  <script defer src="lib1.js"></script>
+  <script defer src="lib2.js"></script>
 
-  <!-- Registro del Service Worker -->
-  <script>
+  <script defer>
+    // Registro del Service Worker
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register("sv.js")
-        .then(function (registro) {
+        .then(registro => {
           console.log('Registro del SW satisfactorio con ámbito:', registro.scope);
         })
-        .catch(function (err) {
+        .catch(err => {
           console.log('El registro del SW falló:', err);
         });
     }
+
+    // Asignar evento al botón una vez que el DOM esté listo
+    window.addEventListener('DOMContentLoaded', () => {
+      const btn = document.getElementById('btnExhibirLinea');
+      if (btn && typeof exhibirLineas === 'function') {
+        btn.addEventListener('click', exhibirLineas);
+      }
+    });
   </script>
 </body>
 </html>
