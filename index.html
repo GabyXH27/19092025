@@ -24,7 +24,7 @@
   <script defer>
     // Registro del Service Worker
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register("sv.js")
+      navigator.serviceWorker.register("sw.js")
         .then(registro => {
           console.log('Registro del SW satisfactorio con ámbito:', registro.scope);
         })
@@ -43,3 +43,4 @@
   </script>
 </body>
 </html>
+
